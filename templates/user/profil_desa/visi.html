@@ -1,0 +1,46 @@
+{% load static %}
+{% include 'base/head.html' %}
+
+{% include 'base/nav.html' %}
+
+<div class="site-section py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <div class="heading-39101 mb-5">
+          <span class="backdrop">Visi</span>
+          <span class="subtitle-39191">Visi</span>
+          <h3>Desa Suban Ayam</h3>
+        </div>
+        
+        {% for data in data %}
+          <p>{{data.visi}}</p>
+        {% endfor %}
+      </div>
+      <div class="col-md-6" data-aos="fade-right">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="site-section py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-5 order-2 ml-auto">
+        <div class="heading-39101 mb-5">
+          <span class="backdrop">Misi</span>
+          <span class="subtitle-39191">Misi</span>
+          <h3>Desa Suban Ayam</h3>
+        </div>
+        {% for data in data %}
+          <p>{{data.misi}}</p>
+        {% endfor %}
+      </div>
+      <div class="col-md-6 order-1" data-aos="fade-left">
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include 'base/footer.html' %}

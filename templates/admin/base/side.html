@@ -1,0 +1,137 @@
+{% load static %}
+
+<nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+  <div class="scrollbar-inner">
+    <!-- Brand -->
+    <div class="sidenav-header d-flex align-items-center">
+      <a class="navbar-brand" href="{% url 'index' %}">
+        <img src="{% static 'argon/assets/img/brand/a.png' %}" class="navbar-brand-img" alt="...">
+      </a>
+      <div class="ml-auto">
+        <!-- Sidenav toggler -->
+        <div class="sidenav-toggler d-none d-xl-block" data-action="sidenav-unpin" data-target="#sidenav-main">
+          <div class="sidenav-toggler-inner">
+            <i class="sidenav-toggler-line"></i>
+            <i class="sidenav-toggler-line"></i>
+            <i class="sidenav-toggler-line"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navbar-inner">
+      <!-- Collapse -->
+      <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+        <!-- Nav items -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'petugas' %}">
+              <i class="ni ni-shop text-primary"></i>
+              <span class="nav-link-text">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == "visi_admin" %}active{% elif  request.resolver_match.url_name == "dana" %}active{% elif  request.resolver_match.url_name == "info_covid" %}active{% elif  request.resolver_match.url_name == "v_berita" %}active{% endif %}"
+              href="#navbar-examples" data-toggle="collapse" role="button"
+              aria-expanded="{% if request.resolver_match.url_name == "visi_admin" %}true{% elif  request.resolver_match.url_name == "dana" %}true{% elif  request.resolver_match.url_name == "info_covid" %}true{% elif  request.resolver_match.url_name == "v_berita" %}true{% endif %}"
+              aria-controls="navbar-examples">
+              <i class="ni ni-ungroup text-orange"></i>
+              <span class="nav-link-text">Profil desa</span>
+            </a>
+            <div
+              class="collapse {% if request.resolver_match.url_name == "visi_admin" %}show{% elif  request.resolver_match.url_name == "dana" %}show{% elif  request.resolver_match.url_name == "info_covid" %}show{% elif  request.resolver_match.url_name == "v_berita" %}show{% endif %}"
+              id="navbar-examples">
+              <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                  <a href="{% url 'v_berita' %}"
+                    class="nav-link {% if request.resolver_match.url_name == "v_berita" %}active{% endif %}">Informasi
+                    Desa</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'visi_admin' %}"
+                    class="nav-link {% if request.resolver_match.url_name == "visi_admin" %}active{% endif %}">Visi
+                    misi</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'dana' %}"
+                    class="nav-link {% if request.resolver_match.url_name == "dana" %}active{% endif %}">APBD Desa</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'info_covid' %}"
+                    class="nav-link {% if request.resolver_match.url_name == "info_covid" %}active{% endif %}">Informasi
+                    Covid-19</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#navbar-components" data-toggle="collapse" role="button" aria-expanded="false"
+              aria-controls="navbar-components">
+              <i class="ni ni-ui-04 text-info"></i>
+              <span class="nav-link-text">Potensi desa</span>
+            </a>
+            <div class="collapse" id="navbar-components">
+              <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                  <a href="{% url 'sumberda' %}" class="nav-link">SDA</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'sumberdm' %}" class="nav-link">SDM</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'lembaga_v' %}" class="nav-link">Kelembagaan</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'pras' %}" class="nav-link">Prasarana</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'prodak' %}" class="nav-link">Produk</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'penduduk' %}" class="nav-link">Data penduduk</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#navbar-forms" data-toggle="collapse" role="button" aria-expanded="false"
+              aria-controls="navbar-forms">
+              <i class="ni ni-single-copy-04 text-pink"></i>
+              <span class="nav-link-text">Aparatur</span>
+            </a>
+            <div class="collapse" id="navbar-forms">
+              <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                  <a href="{% url 'perangkat_admin' %}"
+                    class="nav-link {% if request.resolver_match.url_name == "perangkat_admin" %}active{% endif %}">Perangkat
+                    Desa</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'bpd_admin' %}"
+                    class="nav-link {% if request.resolver_match.url_name == "bpd_admin" %}active{% endif %}">Perangkat
+                    BPD</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'agama' %}"
+                    class="nav-link {% if request.resolver_match.url_name == "agama" %}active{% endif %}">Perangkat
+                    Agama</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'bma' %}"
+                    class="nav-link {% if request.resolver_match.url_name == "bma" %}active{% endif %}">Perangkat
+                    BMA</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'kt' %}"
+                    class="nav-link {% if request.resolver_match.url_name == "kt" %}active{% endif %}">Karang Taruna</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+      </li>
+      </ul>
+    </div>
+  </div>
+  </div>
+</nav>

@@ -1,0 +1,144 @@
+{% load static %}
+{% include 'base/head.html' %}
+
+{% include 'base/nav.html' %}
+<div class="ftco-blocks-cover-1">
+    {% if not gambar %}
+    <div class="site-section-cover overlay" style="background-image: url('{% static 'default/struk.jpg' %}')">
+        {% else %}
+        {% for data in gambar %}
+        <div class="site-section-cover overlay" style="background-image: url('{{data.foto.url}}">
+            {% endfor %}
+            {% endif %}
+            <div class="container">
+                <div class="row align-items-center justify-content-center text-center">
+                    <div class="col-md-8" data-aos="fade-up">
+                        <h1 class="mb-3 text-white">Struktur Perangkat Desa</h1>
+                        <p>Suban Ayam</p>
+                        {% if request.user.is_authenticated %}
+                        {% if not gambar %}
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#export">Tambah Gambar</button>
+                        {% else %}
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#ubah">Ubah Gambar</button>
+                        {% endif %}
+                        {% else %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="site-section">
+        <div class="container">
+            <div class="row justify-content-center text-center mb-5">
+                <div class="col-md-10">
+                    <div class="heading-39101">
+                        <span class="subtitle-39193">Perangkat Desa</span>
+                        <h3>Suban Ayam</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                {% for data in data %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="person-29191 text-center">
+                        {% if not data.foto %}
+                        <img src="{% static 'default/profil.png' %}" alt="Image" class="img-fluid mb-4">
+                        {% else %}
+                        <img src="{{data.foto.url}}" alt="Image" class="img-fluid mb-4">
+                        {% endif %}
+                        <div class="px-4">
+                            <h2 class="mb-2">{{data.nama}}</h2>
+                            <p class="caption">{{data.jabatan}}</p>
+                        </div>
+                    </div>
+                    <div class="row ml-5">
+                        <table class="table-borderless">
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Alamat &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:</td>
+                                    <td>{{data.alamat}}</td>
+                                </tr>
+                                <tr>
+                                    <td>TTL &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; :</td>
+                                    <td>{{data.ttl}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Jenis kelamin :</td>
+                                    <td>{{data.jk}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Pendidikan &nbsp; &nbsp; :</td>
+                                    <td>{{data.pendidikan}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Mulai bekerja :</td>
+                                    <td>{{data.mulai_bekerja}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="export" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true"></button>
+                    <h4 class="modal-title" id="myModalLabel">Upload gambar</h4>
+                </div>
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-4 control-label">Pilih file</label>
+                            <div class="col-sm-12">
+                                <input type="file" name="foto" required>
+                            </div>
+                            <input type="number" name="bagian" value="1" hidden>
+                        </div>
+                    </div>
+                    <div class=" modal-footer">
+                        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary btn-flat" id="simpan">Upload</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ubah" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true"></button>
+                    <h4 class="modal-title" id="myModalLabel">Ubah gambar</h4>
+                </div>
+                <form action="{% url 'ubah_struk_perangkat' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-4 control-label">Pilih file</label>
+                            <div class="col-sm-12">
+                                <input type="file" name="foto" required>
+                            </div>
+                            <input type="number" name="bagian" value="1" hidden>
+                        </div>
+                    </div>
+                    <div class=" modal-footer">
+                        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary btn-flat" id="simpan">Upload</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% include 'base/footer.html' %}

@@ -1,0 +1,74 @@
+ {% load static %}
+ {% include 'admin/base/head.html' %}
+
+ <body>
+   <!-- Sidenav -->
+   {% include 'admin/base/side.html' %}
+   <!-- Main content -->
+   <div class="main-content" id="panel">
+     <!-- Topnav -->
+     {% include 'admin/base/nav.html' %}
+     <!-- Header -->
+     <!-- Header -->
+     <div class="header bg-primary pb-6">
+       <div class="container-fluid">
+         <div class="header-body">
+           <div class="row align-items-center py-4">
+             <div class="col-lg-6 col-7">
+               <h6 class="h2 text-white d-inline-block mb-0">Datatables</h6>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+     <!-- Page content -->
+
+     <div class="container-fluid mt--6">
+       <!-- Table -->
+       <div class="row">
+         <div class="col">
+           <div class="card">
+             <!-- Card header -->
+             <div class="card-header">
+               <button type="button" class="btn btn-primary btn-sm">Tambah</button>
+             </div>
+             <div class="table-responsive py-4">
+               <table class="table table-flush" id="datatable-basic">
+                 <thead class="thead-light">
+                   <tr>
+                     <th>Name</th>
+                     <th>Position</th>
+                     <th>Office</th>
+                     <th>Age</th>
+                     <th>Start date</th>
+                     <th>Salary</th>
+                   </tr>
+                 </thead>
+                 <tfoot>
+                   <tr>
+                     <th>Name</th>
+                     <th>Position</th>
+                     <th>Office</th>
+                     <th>Age</th>
+                     <th>Start date</th>
+                     <th>Salary</th>
+                   </tr>
+                 </tfoot>
+                 <tbody>
+                   <tr>
+                     <td>Tiger Nixon</td>
+                     <td>System Architect</td>
+                     <td>Edinburgh</td>
+                     <td>61</td>
+                     <td>2011/04/25</td>
+                     <td>$320,800</td>
+                   </tr>
+                 </tbody>
+               </table>
+             </div>
+           </div>
+         </div>
+       </div>
+
+       <!-- Footer -->
+       {% include 'admin/base/footer.html' %}

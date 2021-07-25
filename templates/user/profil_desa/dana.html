@@ -1,0 +1,77 @@
+{% load static %}
+{% include 'base/head.html' %}
+
+{% include 'base/nav.html' %}
+
+<div class="site-section">
+    <div class="container">
+
+        <div class="row justify-content-center text-center mb-5">
+            <div class="col-md-10">
+                <div class="heading-39101 mb-5">
+                    <span class="backdrop text-center">Dana desa</span>
+                    <span class="subtitle-39191">Dana desa</span>
+                    <h3>Suban Ayam</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="site-section">
+            <div class="container">
+                <div class="row">
+
+                    {% for data in datas %}
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="post-entry-1 h-100">
+
+                            {% if not data.foto %}
+                            <a href="single.html">
+                                <img src="{% static 'default/gambar.png' %}" alt="Image" class="img-fluid">
+                            </a>
+                            {% else %}
+                            <a href="single.html">
+                                <img src="{{data.foto.url}}" alt="Image" class="img-fluid">
+                            </a>
+                            {% endif %}
+
+                            <div class="post-entry-1-contents">
+                                <h2><a href="single.html">{{data.judul}}</a></h2>
+                                <span class="meta d-inline-block mb-3">{{data.tanggal}} <span class="mx-2">Di buat
+                                        oleh</span> <a href="#">{{data.author}}</a></span>
+                                <p>{{data.keterangan|truncatewords:10}}</p></span> <a
+                                    href="{% url 'detail_dana' data.id %}">selengkapnya</a></span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {% if datas.has_other_pages %}
+                <div class="col-12 mt-5 text-center">
+                    {% if datas.has_previous %}
+                    <a class="p-3" href="?page={{ datas.previous_page_number }}">«</a>
+                    {% else %}
+                    <a class="disabled p-3"><span>«</span></a>
+                    {% endif %}
+                    {% for i in datas.paginator.page_range %}
+                    {% if datas.number == i %}
+                    <a class="active p-3"><span>{{ i }} <span class="sr-only">(current)</span></span></a>
+                    {% else %}
+                    <a class="p-3" href="?page={{ i }}">{{ i }}</a>
+                    {% endif %}
+                    {% endfor %}
+                    {% if datas.has_next %}
+                    <a class="p-3" href="?page={{ datas.next_page_number }}">»</a>
+                    {% else %}
+                    <a class="disabled p-3"><span>»</span></a>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+</div> <!-- END .site-section -->
+
+{% include 'base/footer.html' %}

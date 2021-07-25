@@ -1,0 +1,254 @@
+{% load static %}
+{% include 'admin/base/head.html' %}
+
+<body>
+    <!-- Sidenav -->
+    {% include 'admin/base/side.html' %}
+    <!-- Main content -->
+    <div class="main-content" id="panel">
+        <!-- Topnav -->
+        {% include 'admin/base/nav.html' %}
+        <!-- Header -->
+        <!-- Header -->
+        <div class="header bg-primary pb-6">
+            <div class="container-fluid">
+                <div class="header-body">
+                    <div class="row align-items-center py-4">
+                        <div class="col-lg-6 col-7">
+                            <h6 class="h2 text-white d-inline-block mb-0">{{page_title}}</h6>
+                            {% if messages %}
+                            {% for message in messages %}
+                            {% if message.tags == "error"%}
+                            <div class="alert alert-danger d-flex alert-dismissible fade show" role="alert">
+                                <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                                <span class="alert-text">{{message}}</span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            {% else %}
+                            <div class="alert alert-success d-flex alert-dismissible fade show" role="alert">
+                                <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                                <span class="alert-text">{{message}}</span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page content -->
+        <div class="container-fluid mt--6">
+            <!-- Table -->
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <!-- Card header -->
+                        <div class="card-header">
+                            <button type="button" class="btn btn-primary my-4 btn-sm" data-toggle="modal"
+                                data-target="#tambah">Tambah
+                                data</button>
+                        </div>
+                        <div class="table-responsive py-4">
+                            <table class="table table-flush" id="datatable-basic">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">No</th>
+                                        <th scope="col">Nama</th>
+                                        <th scope="col">Lokasi</th>
+                                        <th scope="col">Tanggal dibuat</th>
+                                        <th scope="col">keterangan</th>
+                                        <th scope="col">#</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% for data in data %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>{{data.nama}}</td>
+                                        <td>{{data.lokasi}}</td>
+                                        <td>{{data.tanggal}}</td>
+                                        <td>{{data.keterangan|truncatewords:5}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-warning my-4"
+                                                data-toggle="modal" data-target="#ubah{{data.id}}"><i
+                                                    class="fas fa-pen"></i></button>
+
+                                            <button type="button" class="btn btn-sm btn-danger my-4" data-toggle="modal"
+                                                data-target="#delete{{data.id}}"><i class="fas fa-trash"></i></button>
+
+                                            <div class="modal fade" id="ubah{{data.id}}" tabindex="-1" role="dialog"
+                                                aria-labelledby="myModalLabel">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close"><span
+                                                                    aria-hidden="true"></span></button>
+                                                            <h4 class="modal-title" id="myModalLabel">Ubah Informasi
+                                                                Wisata
+                                                            </h4>
+                                                        </div>
+                                                        <form class="form-horizontal"
+                                                            action="{% url 'ubah_wisata' data.id %}" method="post"
+                                                            enctype="multipart/form-data">
+                                                            {% csrf_token %}
+                                                            <div class="modal-body">
+                                                                <div class="form-group">
+                                                                    <label for="inputEmail3"
+                                                                        class="col-sm-7 control-label">Nama</label>
+                                                                    <div class="col-sm-12">
+                                                                        <input type="text" name="nama"
+                                                                            class="form-control" id="inputEmail3"
+                                                                            value="{{data.nama}}" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="inputEmail3"
+                                                                        class="col-sm-7 control-label">Lokasi</label>
+                                                                    <div class="col-sm-12">
+                                                                        <input type="text" name="lokasi"
+                                                                            class="form-control" id="inputEmail3"
+                                                                            value="{{data.lokasi}}" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="inputPassword3"
+                                                                        class="col-sm-4 control-label">Keterangan</label>
+                                                                    <div class="col-sm-12">
+                                                                        <textarea name="keterangan" class="form-control"
+                                                                            id="" cols="10"
+                                                                            rows="7">{{data.keterangan}}</textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="inputPassword3"
+                                                                        class="col-sm-4 control-label">Foto</label>
+                                                                    <div class="col-sm-12">
+                                                                        <input type="file" name="foto"
+                                                                            class="form-control" id="inputPassword3"
+                                                                            placeholder="Foto" value="{{data.foto}}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="col-sm-1">
+                                                                    <input type="text" name="author" value="{{user}}"
+                                                                        hidden>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class=" modal-footer">
+                                                                <button type="button" class="btn btn-default btn-flat"
+                                                                    data-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-primary btn-flat"
+                                                                    id="simpan">Ubah</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="modal fade" id="delete{{data.id}}" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-sm">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Hapus data
+                                                            </h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <form action="{% url 'hapus_pariwisata' data.id %}"
+                                                            method="POST">
+                                                            {% csrf_token %}
+                                                            <div class="modal-body">
+                                                                Hapus data?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Tutup</button>
+                                                                <button type="submit"
+                                                                    class="btn btn-danger">Hapus</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </tr>
+                                    </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="tambah" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true"></span></button>
+                            <h4 class="modal-title" id="myModalLabel">Tambah Wisata Desa</h4>
+                        </div>
+                        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-7 control-label">Nama</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="nama" class="form-control" id="inputEmail3"
+                                            placeholder="Nama tempat wisata" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-7 control-label">Lokasi</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="lokasi" class="form-control" id="inputEmail3"
+                                            placeholder="Lokasi wisata" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword3" class="col-sm-4 control-label">Keterangan</label>
+                                    <div class="col-sm-10">
+                                        <textarea name="keterangan" class="form-control" id="" cols="5"
+                                            rows="3"> </textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword3" class="col-sm-4 control-label">Foto</label>
+                                    <div class="col-sm-10">
+                                        <input type="file" name="foto" class="form-control" id="inputPassword3"
+                                            placeholder="Foto">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-10">
+                                    <input type="text" name="author" value="{{user}}" hidden>
+                                </div>
+                            </div>
+
+                            <div class=" modal-footer">
+                                <button type="button" class="btn btn-default btn-flat"
+                                    data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary btn-flat" id="simpan">Tambah</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            {% include 'admin/base/footer.html' %}

@@ -1,0 +1,663 @@
+            {% load static %}
+            {% include 'admin/base/head.html' %}
+
+            <body>
+              <!-- Sidenav -->
+              {% include 'admin/base/side.html' %}
+              <!-- Main content -->
+              <div class="main-content" id="panel">
+                <!-- Topnav -->
+                {% include 'admin/base/nav.html' %}
+                <!-- Header -->
+                <!-- Header -->
+                <div class="header bg-{{warna}} pb-6">
+                  <div class="container-fluid">
+                    <div class="header-body">
+                      <div class="row align-items-center py-4">
+                        <div class="col-lg-6 col-7">
+                          <h6 class="h2 text-white d-inline-block mb-0">{{page_title}}</h6>
+                          {% if messages %}
+                          {% for message in messages %}
+                          {% if message.tags == "error"%}
+                          <div class="alert alert-danger d-flex alert-dismissible fade show" role="alert">
+                            <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                            <span class="alert-text">{{message}}</span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          {% else %}
+                          <div class="alert alert-success d-flex alert-dismissible fade show" role="alert">
+                            <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                            <span class="alert-text">{{message}}</span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          {% endif %}
+                          {% endfor %}
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Page content -->
+                <div class="container-fluid mt--6">
+                  <!-- Table -->
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="card-wrapper">
+                        <!-- Form controls -->
+                        <div class="card">
+                          <!-- Card header -->
+                          <div class="card-header bg-primary">
+                            <h3 class="mb-0 text-white">Pertanian</h3>
+                          </div>
+                          <div class="card-header">
+                            <button type="button" class="btn btn-primary my-4 btn-sm" data-toggle="modal"
+                              data-target="#tambah1">Tambah
+                              data</button>
+                          </div>
+                          <div class="table-responsive py-4">
+                            <table class="table table-flush">
+                              <thead class="thead-success">
+                                <tr>
+                                  <th scope="col">No</th>
+                                  <th scope="col">Nama Tanaman</th>
+                                  <th scope="col">Luas Wilayah (Hektare)</th>
+                                  <th scope="col">Keterangan</th>
+                                  <th scope="col">#</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+
+                                {% for data in data1 %}
+                                <tr>
+                                  <td>{{forloop.counter}}</td>
+                                  <td>{{data.nama}}</td>
+                                  <td>{{data.luas}} ha</td>
+                                  <td>{{data.keterangan}}</td>
+                                  <td>
+                                    <button type="button" class="btn btn-sm btn-warning my-4" data-toggle="modal"
+                                      data-target="#ubah{{data.id}}"><i class="fas fa-pen"></i></button>
+
+                                    <button type="button" class="btn btn-sm btn-danger my-4" data-toggle="modal"
+                                      data-target="#delete{{data.id}}"><i class="fas fa-trash"></i></button>
+                                </tr>
+                                </td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <!-- HTML5 inputs -->
+                        <div class="card">
+                          <div class="card-header bg-warning">
+                            <h3 class="mb-0 text-white">Pekerbunan</h3>
+                          </div>
+                          <!-- Card header -->
+                          <div class="card-header">
+                            <button type="button" class="btn btn-primary my-4 btn-sm" data-toggle="modal"
+                              data-target="#tambah2">Tambah
+                              data</button>
+                          </div>
+                          <div class="table-responsive py-4">
+                            <table class="table table-flush">
+                              <thead class="thead-success">
+                                <tr>
+                                  <th scope="col">No</th>
+                                  <th scope="col">Nama Tanaman</th>
+                                  <th scope="col">Luas Wilayah (Hektare)</th>
+                                  <th scope="col">Keterangan</th>
+                                  <th scope="col">#</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for data in data2 %}
+                                <tr>
+                                  <td>{{forloop.counter}}</td>
+                                  <td>{{data.nama}}</td>
+                                  <td>{{data.luas}} ha</td>
+                                  <td>{{data.keterangan}}</td>
+                                  <td>
+                                    <button type="button" class="btn btn-sm btn-warning my-4" data-toggle="modal"
+                                      data-target="#ubah{{data.id}}"><i class="fas fa-pen"></i></button>
+
+                                    <button type="button" class="btn btn-sm btn-danger my-4" data-toggle="modal"
+                                      data-target="#delete{{data.id}}"><i class="fas fa-trash"></i></button>
+                                </tr>
+                                </td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </div>
+
+                        </div>
+                        <div class="card">
+                          <!-- Card header -->
+                          <!-- Card body -->
+                          <div class="card-header bg-success">
+                            <h3 class="mb-0 text-white">Peternakan</h3>
+                          </div>
+                          <!-- Card header -->
+                          <div class="card-header">
+                            <button type="button" class="btn btn-primary my-4 btn-sm" data-toggle="modal"
+                              data-target="#tambah3">Tambah
+                              data</button>
+                          </div>
+                          <div class="table-responsive py-4">
+                            <table class="table table-flush">
+                              <thead class="thead-success">
+                                <tr>
+                                  <th scope="col">No</th>
+                                  <th scope="col">Jenis Hewan Ternak</th>
+                                  <th scope="col">Jumlah (ekor)</th>
+                                  <th scope="col">Keterangan</th>
+                                  <th scope="col">#</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+
+                                {% for data in data3 %}
+                                <tr>
+                                  <td>{{forloop.counter}}</td>
+                                  <td>{{data.nama}}</td>
+                                  <td>{{data.luas}} ekor</td>
+                                  <td>{{data.keterangan}}</td>
+                                  <td>
+                                    <button type="button" class="btn btn-sm btn-warning my-4" data-toggle="modal"
+                                      data-target="#ubah{{data.id}}"><i class="fas fa-pen"></i></button>
+
+                                    <button type="button" class="btn btn-sm btn-danger my-4" data-toggle="modal"
+                                      data-target="#delete{{data.id}}"><i class="fas fa-trash"></i></button>
+                                </tr>
+                                </td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="card-wrapper">
+                        <!-- Sizes -->
+                        <div class="card">
+                          <!-- Card header -->
+                          <div class="card-header bg-danger">
+                            <h3 class="mb-0 text-white">Perikanan</h3>
+                          </div>
+                          <div class="card-header">
+                            <button type="button" class="btn btn-primary my-4 btn-sm" data-toggle="modal"
+                              data-target="#tambah4">Tambah
+                              data</button>
+                          </div>
+                          <div class="table-responsive py-4">
+                            <table class="table table-flush">
+                              <thead class="thead-success">
+                                <tr>
+                                  <th scope="col">No</th>
+                                  <th scope="col">Jenis Ikan</th>
+                                  <th scope="col">Luas Kolam (hektare)</th>
+                                  <th scope="col">Keterangan</th>
+                                  <th scope="col">#</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+
+                                {% for data in data4 %}
+                                <tr>
+                                  <td>{{forloop.counter}}</td>
+                                  <td>{{data.nama}}</td>
+                                  <td>{{data.luas}}</td>
+                                  <td>{{data.keterangan}}</td>
+                                  <td>
+                                    <button type="button" class="btn btn-sm btn-warning my-4" data-toggle="modal"
+                                      data-target="#ubah{{data.id}}"><i class="fas fa-pen"></i></button>
+
+                                    <button type="button" class="btn btn-sm btn-danger my-4" data-toggle="modal"
+                                      data-target="#delete{{data.id}}"><i class="fas fa-trash"></i></button>
+
+                                </tr>
+                                </td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <!-- Textareas -->
+                        <div class="card">
+                          <div class="card-header bg-info">
+                            <h3 class="mb-0 text-white">Sumber daya air</h3>
+                          </div>
+                          <!-- Card header -->
+                          <!-- Card body -->
+                          <!-- Card header -->
+                          <div class="card-header">
+                            <button type="button" class="btn btn-primary my-4 btn-sm" data-toggle="modal"
+                              data-target="#tambah5">Tambah
+                              data</button>
+                          </div>
+                          <div class="table-responsive py-4">
+                            <table class="table table-flush">
+                              <thead class="thead-success">
+                                <tr>
+                                  <th scope="col">No</th>
+                                  <th scope="col">Jenis</th>
+                                  <th scope="col">Jumlah lokasi</th>
+                                  <th scope="col">keterangan</th>
+                                  <th scope="col">#</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for data in data5 %}
+                                <tr>
+                                  <td>{{forloop.counter}}</td>
+                                  <td>{{data.nama}}</td>
+                                  <td>{{data.luas}}</td>
+                                  <td>{{data.ketrangan}}</td>
+                                  <td>
+                                    <button type="button" class="btn btn-sm btn-warning my-4" data-toggle="modal"
+                                      data-target="#ubah{{data.id}}"><i class="fas fa-pen"></i></button>
+
+                                    <button type="button" class="btn btn-sm btn-danger my-4" data-toggle="modal"
+                                      data-target="#delete{{data.id}}"><i class="fas fa-trash"></i></button>
+                                  </td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <!-- Selects -->
+                        <div class="card">
+                          <!-- Card header -->
+                          <div class="card-header bg-default">
+                            <h3 class="mb-0 text-white">Lahan Gembala </h3>
+                          </div>
+                          <!-- Card body -->
+                          <!-- Card header -->
+                          <div class="card-header">
+                            <button type="button" class="btn btn-primary my-4 btn-sm" data-toggle="modal"
+                              data-target="#tambah6">Tambah
+                              data</button>
+                          </div>
+                          <div class="table-responsive py-4">
+                            <table class="table table-flush">
+                              <thead class="thead-success">
+                                <tr>
+                                  <th scope="col">No</th>
+                                  <th scope="col">Jenis ternak</th>
+                                  <th scope="col">Luas (Ha)</th>
+                                  <th scope="col">Keterangan</th>
+                                  <th scope="col">#</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+
+                                {% for data in data6 %}
+                                <tr>
+                                  <td>{{forloop.counter}}</td>
+                                  <td>{{data.nama}}</td>
+                                  <td>{{data.luas}} Ha</td>
+                                  <td></td>
+                                  <td>
+                                    <button type="button" class="btn btn-sm btn-warning my-4" data-toggle="modal"
+                                      data-target="#ubah{{data.id}}"><i class="fas fa-pen"></i></button>
+
+                                    <button type="button" class="btn btn-sm btn-danger my-4" data-toggle="modal"
+                                      data-target="#delete{{data.id}}"><i class="fas fa-trash"></i></button>
+                                  </td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <!-- File browser -->
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- modal pertanian desa -->
+
+                  <div class="modal fade" id="tambah1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                              aria-hidden="true"></span></button>
+                          <h4 class="modal-title" id="myModalLabel">Tambah Data Potensi Pertanian</h4>
+                        </div>
+                        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                          <div class="modal-body">
+                            <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-7 control-label">nama tanaman</label>
+                              <div class="col-sm-10">
+                                <input type="text" name="nama" class="form-control" id="inputEmail3"
+                                  placeholder="nama tanaman" required>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-7 control-label">luas</label>
+                              <div class="col-sm-10">
+                                <input type="text" name="luas" class="form-control" id="inputEmail3"
+                                  placeholder="luas wilayah (hektare)" required>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="inputPassword3" class="col-sm-4 control-label">Keterangan</label>
+                              <div class="col-sm-10">
+                                <textarea name="keterangan" class="form-control" id="" cols="5" rows="3"> </textarea>
+                              </div>
+                            </div>
+                            <input type="text" name="jenis" value="1" hidden>
+                          </div>
+                          <div class=" modal-footer">
+                            <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary btn-flat" id="simpan">Tambah</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- modal potensi perkebunan -->
+
+                  <div class="modal fade" id="tambah2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                              aria-hidden="true"></span></button>
+                          <h4 class="modal-title" id="myModalLabel">Potensi perkebunan</h4>
+                        </div>
+                        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                          <div class="modal-body">
+                            <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-7 control-label">nama tanaman</label>
+                              <div class="col-sm-10">
+                                <input type="text" name="nama" class="form-control" id="inputEmail3"
+                                  placeholder="nama tanaman" required>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-7 control-label">luas</label>
+                              <div class="col-sm-10">
+                                <input type="text" name="luas" class="form-control" id="inputEmail3"
+                                  placeholder="luas wilayah (hektare)" required>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="inputPassword3" class="col-sm-4 control-label">Keterangan</label>
+                              <div class="col-sm-10">
+                                <textarea name="keterangan" class="form-control" id="" cols="5" rows="3"> </textarea>
+                              </div>
+                            </div>
+                            <input type="text" name="jenis" value="2" hidden>
+                          </div>
+                          <div class=" modal-footer">
+                            <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary btn-flat" id="simpan">Tambah</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Potensi peternakan desa -->
+                  <div class="modal fade" id="tambah3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                              aria-hidden="true"></span></button>
+                          <h4 class="modal-title" id="myModalLabel">Potensi perikanan</h4>
+                        </div>
+                        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                          <div class="modal-body">
+                            <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-7 control-label">Jenis Hewan Ternak</label>
+                              <div class="col-sm-10">
+                                <input type="text" name="nama" class="form-control" id="inputEmail3"
+                                  placeholder="jenis hewan ternak" required>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-7 control-label">Jumlah (ekor)</label>
+                              <div class="col-sm-10">
+                                <input type="text" name="luas" class="form-control" id="inputEmail3"
+                                  placeholder="Jumlah hewan ternak (ekor)" required>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="inputPassword3" class="col-sm-4 control-label">Keterangan</label>
+                              <div class="col-sm-10">
+                                <textarea name="keterangan" class="form-control" id="" cols="5" rows="3"> </textarea>
+                              </div>
+                            </div>
+                            <input type="text" name="jenis" value="3" hidden>
+                          </div>
+                          <div class=" modal-footer">
+                            <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary btn-flat" id="simpan">Tambah</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Potensi perikanan -->
+
+                  <div class="modal fade" id="tambah4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                              aria-hidden="true"></span></button>
+                          <h4 class="modal-title" id="myModalLabel">Potensi perikanan</h4>
+                        </div>
+                        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                          <div class="modal-body">
+                            <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-7 control-label">Jenis Ikan</label>
+                              <div class="col-sm-10">
+                                <input type="text" name="nama" class="form-control" id="inputEmail3"
+                                  placeholder="Jenis ikan" required>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-7 control-label">Luas Kolam (Ha)</label>
+                              <div class="col-sm-10">
+                                <input type="text" name="luas" class="form-control" id="inputEmail3"
+                                  placeholder="Luas Kolam (Hektare)" required>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="inputPassword3" class="col-sm-4 control-label">Keterangan</label>
+                              <div class="col-sm-10">
+                                <textarea name="keterangan" class="form-control" id="" cols="5" rows="3"> </textarea>
+                              </div>
+                            </div>
+                            <input type="text" name="jenis" value="4" hidden>
+                          </div>
+                          <div class=" modal-footer">
+                            <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary btn-flat" id="simpan">Tambah</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Pemberdayaan masyarakat  -->
+
+                  <div class="modal fade" id="tambah5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                              aria-hidden="true"></span></button>
+                          <h4 class="modal-title" id="myModalLabel">Potensi sumber daya air</h4>
+                        </div>
+                        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                          <div class="modal-body">
+                            <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-7 control-label">Jenis Sumber daya air</label>
+                              <div class="col-sm-10">
+                                <input type="text" name="nama" class="form-control" id="inputEmail3"
+                                  placeholder="jenis sumber daya air" required>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-7 control-label">Jumlah lokasi Sumber daya
+                                air</label>
+                              <div class="col-sm-10">
+                                <input type="text" name="luas" class="form-control" id="inputEmail3"
+                                  placeholder="jumlah lokasi sumber daya air" required>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="inputPassword3" class="col-sm-4 control-label">Keterangan</label>
+                              <div class="col-sm-10">
+                                <textarea name="keterangan" class="form-control" id="" cols="5" rows="3"> </textarea>
+                              </div>
+                            </div>
+                            <input type="text" name="jenis" value="5" hidden>
+                          </div>
+                          <div class=" modal-footer">
+                            <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary btn-flat" id="simpan">Tambah</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Penanggulanagn bencana, darurat dan mendesak -->
+                  <div class="modal fade" id="tambah6" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                              aria-hidden="true"></span></button>
+                          <h4 class="modal-title" id="myModalLabel">Penanggulangan bencana, darurat dan mendesak</h4>
+                        </div>
+                        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                          <div class="modal-body">
+                            <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-7 control-label">Jenis hewan ternak</label>
+                              <div class="col-sm-10">
+                                <input type="text" name="nama" class="form-control" id="inputEmail3"
+                                  placeholder="Jenis hewan" required>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-7 control-label">Luas lahan</label>
+                              <div class="col-sm-10">
+                                <input type="text" name="luas" class="form-control" id="inputEmail3"
+                                  placeholder="Luas lahan" required>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="inputPassword3" class="col-sm-4 control-label">Keterangan</label>
+                              <div class="col-sm-10">
+                                <textarea name="keterangan" class="form-control" id="" cols="5" rows="3"> </textarea>
+                              </div>
+                            </div>
+                            <input type="text" name="jenis" value="6" hidden>
+                          </div>
+                          <div class=" modal-footer">
+                            <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary btn-flat" id="simpan">Tambah</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  {% for data in data  %}
+                  <div class="modal fade" id="ubah{{data.id}}" tabindex="-1" role="dialog"
+                    aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                              aria-hidden="true"></span></button>
+                          <h4 class="modal-title" id="myModalLabel">Ubah data</h4>
+                        </div>
+                        <form class="form-horizontal" method="POST" action="{% url 'ubah_sda' data.id %}"
+                          enctype="multipart/form-data">
+                          {% csrf_token %}
+                          <div class="modal-body">
+                            <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-7 control-label">Nama/jenis sumber daya</label>
+                              <div class="col-sm-7">
+                                <input type="text" name="nama" class="form-control" id="inputEmail3"
+                                  value="{{data.nama}}" placeholder="Nama Perangkat" required>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-7 control-label">Jumlah/luas sumber daya</label>
+                              <div class="col-sm-7">
+                                <input type="text" name="luas" class="form-control" id="inputEmail3"
+                                  value="{{data.luas}}" placeholder="Nama Perangkat" required>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="inputPassword3" class="col-sm-4 control-label">Keterangan</label>
+                              <div class="col-sm-10">
+                                <textarea name="keterangan" class="form-control" id="" cols="5"
+                                  rows="3">{{data.keterangan}}</textarea>
+                              </div>
+                            </div>
+                          </div>
+                          <div class=" modal-footer">
+                            <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary btn-flat" id="simpan">Ubah</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="modal fade" id="delete{{data.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Hapus data</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <form action="{% url 'hapus_sda' data.id %}" method="POST">
+                          {% csrf_token %}
+                          <div class="modal-body">
+                            Hapus data?
+                          </div>
+                          <input type="text" name="bagian" value="1" hidden>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-danger">Hapus</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+
+                  <!-- Footer -->
+                  {% include 'admin/base/footer.html' %}

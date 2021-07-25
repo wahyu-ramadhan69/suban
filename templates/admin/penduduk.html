@@ -1,0 +1,467 @@
+{% load static %}
+{% include 'admin/base/head.html' %}
+
+<body>
+  <!-- Sidenav -->
+  {% include 'admin/base/side.html' %}
+  <!-- Main content -->
+  <div class="main-content" id="panel">
+    <!-- Topnav -->
+    {% include 'admin/base/nav.html' %}
+    <!-- Header -->
+    <!-- Header -->
+    <div class="header bg-{{warna}} pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+              <h6 class="h2 text-white d-inline-block mb-0">{{page_title}}</h6>
+              {% if messages %}
+              {% for message in messages %}
+              {% if message.tags == "error"%}
+              <div class="alert alert-danger d-flex alert-dismissible fade show" role="alert">
+                <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                <span class="alert-text">{{message}}</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              {% else %}
+              <div class="alert alert-success d-flex alert-dismissible fade show" role="alert">
+                <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                <span class="alert-text">{{message}}</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              {% endif %}
+              {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="container-fluid mt--6">
+      <!-- Table -->
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <!-- Card header -->
+            <div class="card-header">
+              <button type="button" class="btn btn-primary my-4 btn-sm" data-toggle="modal" data-target="#tambah">Tambah
+                data</button>
+              <button type="button" class="btn btn-info my-4 btn-sm" data-toggle="modal" data-target="#cetak">Cetak
+                data</button>
+              <button type="button" data-toggle="modal" data-target="#filter" class="btn btn-secondary my-4 btn-sm">
+                Filter data</button>
+              <button type="button" data-toggle="modal" data-target="#hapus_semua" class="btn btn-danger my-4 btn-sm">
+                Hapus semua data</button>
+              <button type="button" data-toggle="modal" data-target="#export" class="btn btn-success my-4 btn-sm">
+                Import Data</button>
+            </div>
+            <div class="table-responsive py-4">
+              <table class="table table-flush" id="datatable-basic">
+                <thead class="thead-light">
+                  <tr>
+                    <th>No</th>
+                    <th scope="col">No KK</th>
+                    <th scope="col">NIK</th>
+                    <th scope="col">Nama</th>
+                    <th scope="col">Tempat Lahir</th>
+                    <th scope="col">Tanggal Lahir</th>
+                    <th scope="col">Status Perkawinan</th>
+                    <th scope="col">Jenis Kelamin</th>
+                    <th scope="col">Alamat</th>
+                    <th scope="col">RT</th>
+                    <th scope="col">Dusun</th>
+                    <th scope="col">Umur</th>
+                    <th scope="col">Pekerjaan</th>
+                    <th scope="col">Pendidikan</th>
+
+                    <th scope="col">#</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  {% for penduduk in data %}
+                  <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{penduduk.nokk}}</td>
+                    <td>{{penduduk.nik}}</td>
+                    <td>{{penduduk.nama}}</td>
+                    <td>{{penduduk.tempat_lahir|default_if_none:""}}</td>
+                    <td>{{penduduk.tanggal_lahir|default_if_none:""}}</td>
+                    <td>{{penduduk.status_perkawinan|default_if_none:""}}</td>
+                    <td>{{penduduk.jk|default_if_none:""}}</td>
+                    <td>{{penduduk.alamat|default_if_none:""}}</td>
+                    <td>{{penduduk.rt|default_if_none:""}}</td>
+                    <td>{{penduduk.dusun|default_if_none:""}}</td>
+                    <td>{{penduduk.age}}</td>
+                    <td>{{penduduk.pekerjaan|default_if_none:""}}</td>
+                    <td>{{penduduk.pendidikan|default_if_none:""}}</td>
+                    <td>
+                      <button type="button" class="btn btn-sm btn-warning my-4" data-toggle="modal"
+                        data-target="#ubah{{penduduk.id}}"><i class="fas fa-pen"></i></button>
+
+                      <button type="button" class="btn btn-sm btn-danger my-4" data-toggle="modal"
+                        data-target="#delete{{penduduk.id}}"><i class="fas fa-trash"></i></button>
+                    </td>
+                  </tr>
+                  </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="tambah" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                  aria-hidden="true"></span></button>
+              <h4 class="modal-title" id="myModalLabel">Tambah Penduduk desa</h4>
+            </div>
+            <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">No KK</label>
+                  <input type="number" name="nokk" class="form-control form-control-sm" id="exampleInputEmail1"
+                    placeholder="No kk" required>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Nik</label>
+                  <input type="number" name="nik" class="form-control form-control-sm" id="exampleInputPassword1"
+                    placeholder="Nik" required>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Nama</label>
+                  <input type="text" name="nama" class="form-control form-control-sm" id="exampleInputPassword1"
+                    placeholder="Nama" required>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Tempat lahir</label>
+                  <input type="text" name="tempat_lahir" class="form-control form-control-sm" id="exampleInputPassword1"
+                    placeholder="Tempat Lahir" required>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Tanggal lahir</label>
+                  <input type="date" name="tanggal_lahir" class="form-control form-control-sm"
+                    id="exampleInputPassword1" placeholder="Tanggal Lahir" value="" required>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Status Pernikahan</label>
+                  <select class="form-control form-control-sm" id="inputGroupSelect01" name="status_perkawinan"
+                    required>
+                    <option selected value="">Pilih Status Pernikahan....</option>
+                    <option value="B">B</option>
+                    <option value="S">S</option>
+                    <option value="P">P</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Jenis Kelamin</label>
+                  <select class="form-control form-control-sm" id="inputGroupSelect01" name="jk" required>
+                    <option selected value="">Pilih Jenis Kelamin....</option>
+                    <option value="L">Laki laki</option>
+                    <option value="P">Perempuan</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Alamat</label>
+                  <textarea name="alamat" id="" cols="5" rows="4" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">RT</label>
+                  <input type="number" name="rt" class="form-control form-control-sm" id="exampleInputPassword1"
+                    placeholder="RT" value="">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Dusun</label>
+                  <input type="number" name="dusun" class="form-control form-control-sm" id="exampleInputPassword1"
+                    placeholder="Dusun" value="" required>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Pekerjaan</label>
+                  <input type="text" name="pekerjaan" class="form-control form-control-sm" id="exampleInputPassword1"
+                    placeholder="Pekerjaan" value="">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Pendidikan</label>
+                  <input type="text" name="pendidikan" class="form-control form-control-sm" id="exampleInputPassword1"
+                    placeholder="Pendidikan" value="">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+      {% for data in data %}
+      <div class="modal fade" id="ubah{{data.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                  aria-hidden="true"></span></button>
+              <h4 class="modal-title" id="myModalLabel">Ubah Informasi
+                Wisata
+              </h4>
+            </div>
+            <form class="form-horizontal" action="{% url 'ubah_penduduk' data.id %}" method="post"
+              enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">No KK</label>
+                  <input type="number" name="nokk" class="form-control form-control-sm" id="exampleInputEmail1"
+                    placeholder="No kk" value="{{data.nokk|default_if_none:""}}" required>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Nik</label>
+                  <input type="number" name="nik" class="form-control form-control-sm" id="exampleInputPassword1"
+                    placeholder="Nik" value="{{data.nik|default_if_none:""}}" required>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Nama</label>
+                  <input type="text" name="nama" class="form-control form-control-sm" id="exampleInputPassword1"
+                    placeholder="Nama" value="{{data.nama|default_if_none:""}}" required>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Tempat lahir</label>
+                  <input type="text" name="tempat_lahir" class="form-control form-control-sm" id="exampleInputPassword1"
+                    placeholder="Tempat Lahir" value="{{data.tempat_lahir|default_if_none:""}}" required>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Tanggal lahir</label>
+                  <input type="date" name="tanggal_lahir" class="form-control form-control-sm"
+                    id="exampleInputPassword1" placeholder="Tanggal Lahir"
+                    value="{{data.tanggal_lahir|date:'Y-m-d'|default_if_none:""}}" required>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Status Pernikahan</label>
+                  <select class="form-control form-control-sm" id="inputGroupSelect01" name="status_perkawinan"
+                    required>
+                    <option value="{{data.status_perkawinan|default_if_none:""}}">Pilih Status Pernikahan....
+                    </option>
+                    <option value="B">B</option>
+                    <option value="S">S</option>
+                    <option value="P">P</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Jenis Kelamin</label>
+                  <select class="form-control form-control-sm" id="inputGroupSelect01" name="jk" required>
+                    <option selected value="{{data.jk|default_if_none:""}}">Pilih Jenis Kelamin....</option>
+                    <option value="L">Laki laki</option>
+                    <option value="P">Perempuan</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Alamat</label>
+                  <textarea name="alamat" id="" cols="5" rows="4"
+                    class="form-control">{{data.alamat|default_if_none:""}}</textarea>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">RT</label>
+                  <input type="number" name="rt" class="form-control form-control-sm" id="exampleInputPassword1"
+                    placeholder="RT" value="{{data.rt|default_if_none:""}}">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Dusun</label>
+                  <input type="number" name="dusun" class="form-control form-control-sm" id="exampleInputPassword1"
+                    placeholder="Dusun" value="{{data.dusun|default_if_none:""}}" required>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Pekerjaan</label>
+                  <input type="text" name="pekerjaan" class="form-control form-control-sm" id="exampleInputPassword1"
+                    placeholder="Pekerjaan" value="{{data.pekerjaan|default_if_none:""}}">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Pendidikan</label>
+                  <input type="text" name="pendidikan" class="form-control form-control-sm" id="exampleInputPassword1"
+                    placeholder="Pendidikan" value="{{data.pendidikan|default_if_none:""}}">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="delete{{data.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Hapus data
+              </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action="{% url 'hapus_penduduk' data.id %}" method="POST">
+              {% csrf_token %}
+              <div class="modal-body">
+                Hapus data?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-danger">Hapus</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+
+      <div class="modal fade" id="export" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                  aria-hidden="true"></button>
+              <h4 class="modal-title" id="myModalLabel">Import data</h4>
+            </div>
+            <form action="{% url 'simple_upload' %}" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Pilih file</label>
+                  <div class="col-sm-7">
+                    <input type="file" name="myfile" class="form-control" id="inputEmail3" required>
+                  </div>
+                </div>
+              </div>
+              <div class=" modal-footer">
+                <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary btn-flat" id="simpan">Upload</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="cetak" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                  aria-hidden="true"></button>
+              <h4 class="modal-title" id="myModalLabel">Cetak data penduduk</h4>
+            </div>
+            <form action="{% url 'cetak' %}" method="post" enctype="multipart/form-data" target="blank">
+              {% csrf_token %}
+              <div class="modal-body">
+                <div class="form-group">
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Pilih format cetak</label>
+                    <select class="form-control form-control-sm" id="inputGroupSelect01" name="format">
+                      <option selected value="">Pilih format cetak</option>
+                      <option value="1">Pdf</option>
+                      <option value="2">Excel</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Pilih dusun</label>
+                    <select class="form-control form-control-sm" id="inputGroupSelect01" name="no">
+                      <option value="8">Pilih dusun</option>
+                      <option value="0">0</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">Cetak semua data penduduk</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class=" modal-footer">
+                <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary btn-flat" id="simpan">Cetak</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="filter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                  aria-hidden="true"></button>
+              <h4 class="modal-title" id="myModalLabel">Filter data</h4>
+            </div>
+            <form action="{% url 'filter' %}" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="modal-body">
+                <div class="form-group">
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Pilih dusun</label>
+                    <select class="form-control form-control-sm" id="inputGroupSelect01" name="no">
+                      <option selected value="">Pilih dusun</option>
+                      <option value="0">0</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">Tampilkan semua data penduduk</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class=" modal-footer">
+                <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary btn-flat" id="simpan">Filter</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="hapus_semua" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Hapus semuan data
+              </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action="{% url 'hapus_semua' %}" method="POST">
+              {% csrf_token %}
+              <div class="modal-body">
+                Hapus seluruh data?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-danger">Hapus</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      {% include 'admin/base/footer.html' %}

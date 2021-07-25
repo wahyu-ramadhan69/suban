@@ -1,0 +1,207 @@
+            {% load static %}
+            {% include 'admin/base/head.html' %}
+
+            <body>
+              <!-- Sidenav -->
+              {% include 'admin/base/side.html' %}
+              <!-- Main content -->
+              <div class="main-content" id="panel">
+                <!-- Topnav -->
+                {% include 'admin/base/nav.html' %}
+                <!-- Header -->
+                <!-- Header -->
+                <div class="header bg-{{warna}} pb-6">
+                  <div class="container-fluid">
+                    <div class="header-body">
+                      <div class="row align-items-center py-4">
+                        <div class="col-lg-6 col-7">
+                          <h6 class="h2 text-white d-inline-block mb-0">{{page_title}}</h6>
+                          {% if messages %}
+                          {% for message in messages %}
+                          {% if message.tags == "error"%}
+                          <div class="alert alert-danger d-flex alert-dismissible fade show" role="alert">
+                            <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                            <span class="alert-text">{{message}}</span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          {% else %}
+                          <div class="alert alert-success d-flex alert-dismissible fade show" role="alert">
+                            <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                            <span class="alert-text">{{message}}</span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          {% endif %}
+                          {% endfor %}
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Page content -->
+                <div class="container-fluid mt--6">
+                  <!-- Table -->
+                  <div class="row">
+                    <div class="col">
+                      <div class="card">
+                        <!-- Card header -->
+                        <div class="card-header">
+                          <button type="button" class="btn btn-primary my-4 btn-sm" data-toggle="modal"
+                            data-target="#tambah">Tulis Berita</button>
+                        </div>
+                        <div class="table-responsive py-4">
+                          <table class="table table-flush" id="datatable-basic">
+                            <thead class="thead-light">
+                              <tr>
+                                <th>No</th>
+                                <th scope="col">Judul</th>
+                                <th scope="col">Deskripsi</th>
+                                <th scope="col">Tanggal diupload</th>
+                                <th scope="col">Tanggal diperbaharui</th>
+                                <th scope="col">Penulis</th>
+                                <th scope="col">#</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for data in data %}
+                              <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{data.judul}}</td>
+                                <td>{{data.deskripsi|truncatechars:10}}</td>
+                                <td>{{data.tanggal_diupload}}</td>
+                                <td>{{data.tanggal_diperbaharui}}</td>
+                                <td>{{data.author}}</td>
+                                <td>
+                                  <button type="button" class="btn btn-warning my-4 btn-sm" data-toggle="modal"
+                                    data-target="#ubah{{data.id}}"><i class="fas fa-pen"></i></button>
+
+                                  <button type="button" class="btn btn-sm btn-danger my-4" data-toggle="modal"
+                                    data-target="#delete{{data.id}}"><i class="fas fa-trash"></i></button>
+                                </td>
+                              </tr>
+                              {% endfor %}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="modal fade" id="tambah" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog modal-lg" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                              aria-hidden="true"></span></button>
+                          <h4 class="modal-title" id="myModalLabel">Artikel berita suban ayam</h4>
+                        </div>
+                        <form class="form-horizontal" method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                          <div class="modal-body">
+                            <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-7 control-label">Judul berita</label>
+                              <div class="col-sm-10">
+                                <input type="text" min="0" name="judul" class="form-control" id="inputEmail3"
+                                  placeholder="Judul berita">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="inputPassword3" class="col-sm-4 control-label">Deskripsi</label>
+                              <div class="col-sm-10">
+                                <textarea name="deskripsi" class="form-control" id="" cols="10" rows="5"> </textarea>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="inputPassword3" class="col-sm-4 control-label">Foto</label>
+                              <div class="col-sm-4">
+                                <input type="file" name="foto" class="form-control">
+                              </div>
+                            </div>
+                            <input type="text" name="author" value="{{user}}" hidden>
+                          </div>
+                          <div class=" modal-footer">
+                            <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary btn-flat" id="simpan">Tambah</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                  {% for data in data  %}
+                  <div class="modal fade" id="ubah{{data.id}}" tabindex="-1" role="dialog"
+                    aria-labelledby="myModalLabel">
+                    <div class="modal-dialog modal-lg" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                              aria-hidden="true"></span></button>
+                          <h4 class="modal-title" id="myModalLabel">Artikel berita suban ayam</h4>
+                        </div>
+                        <form class="form-horizontal" action="{% url 'ubah_berita' data.id %}" method="post"
+                          enctype="multipart/form-data">
+                          {% csrf_token %}
+                          <div class="modal-body">
+                            <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-7 control-label">Judul berita</label>
+                              <div class="col-sm-10">
+                                <input type="text" min="0" name="judul" class="form-control" id="inputEmail3"
+                                  placeholder="Judul berita" value="{{data.judul}}">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="inputPassword3" class="col-sm-4 control-label">Deskripsi</label>
+                              <div class="col-sm-10">
+                                <textarea name="deskripsi" class="form-control" id="" cols="10"
+                                  rows="5">{{data.deskripsi}}</textarea>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="inputPassword3" class="col-sm-4 control-label">Foto</label>
+                              <div class="col-sm-4">
+                                <input type="file" name="foto" class="form-control">
+                              </div>
+                            </div>
+                            <input type="text" name="author" value="{{user}}" hidden>
+                          </div>
+                          <div class=" modal-footer">
+                            <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary btn-flat" id="simpan">Ubah</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="modal fade" id="delete{{data.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Hapus berita</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <form action="{% url 'hapus_berita' data.id %}" method="POST">
+                          {% csrf_token %}
+                          <div class="modal-body">
+                            Hapus berita?
+                          </div>
+                          <input type="text" name="bagian" value="1" hidden>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-danger">Hapus</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+
+                  <!-- Footer -->
+                  {% include 'admin/base/footer.html' %}

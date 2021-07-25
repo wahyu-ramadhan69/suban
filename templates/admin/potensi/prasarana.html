@@ -1,0 +1,870 @@
+{% load static %}
+{% include 'admin/base/head.html' %}
+
+<body>
+    <!-- Sidenav -->
+    {% include 'admin/base/side.html' %}
+    <!-- Main content -->
+    <div class="main-content" id="panel">
+        <!-- Topnav -->
+        {% include 'admin/base/nav.html' %}
+        <!-- Header -->
+        <!-- Header -->
+        <div class="header bg-{{warna}} pb-6">
+            <div class="container-fluid">
+                <div class="header-body">
+                    <div class="row align-items-center py-4">
+                        <div class="col-lg-6 col-7">
+                            <h6 class="h2 text-white d-inline-block mb-0">{{page_title}}</h6>
+                            {% if messages %}
+                            {% for message in messages %}
+                            {% if message.tags == "error"%}
+                            <div class="alert alert-danger d-flex alert-dismissible fade show" role="alert">
+                                <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                                <span class="alert-text">{{message}}</span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            {% else %}
+                            <div class="alert alert-success d-flex alert-dismissible fade show" role="alert">
+                                <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                                <span class="alert-text">{{message}}</span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page content -->
+        <div class="container-fluid mt--6">
+            <!-- Table -->
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card-wrapper">
+                        <!-- Form controls -->
+                        <div class="card">
+                            <!-- Card header -->
+                            <div class="card-header bg-primary">
+                                <h3 class="mb-0 text-white">Prasarana transportasi darat</h3>
+                            </div>
+                            <div class="card-header">
+                                <button type="button" class="btn btn-primary my-4 btn-sm" data-toggle="modal"
+                                    data-target="#tambah1">Tambah
+                                    data</button>
+                            </div>
+                            <div class="table-responsive py-4">
+                                <table class="table table-flush">
+                                    <thead class="thead-success">
+                                        <tr>
+                                            <th scope="col">No</th>
+                                            <th scope="col">Nama prasarana</th>
+                                            <th scope="col">Panjang/Luas</th>
+                                            <th scope="col">Deskripsi</th>
+                                            <th scope="col">#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {% for data in data1 %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{data.nama}}</td>
+                                            <td>{{data.jumlah}} Km</td>
+                                            <td>{{data.deskripsi}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm btn-warning my-4"
+                                                    data-toggle="modal" data-target="#ubah{{data.id}}"><i
+                                                        class="fas fa-pen"></i></button>
+
+                                                <button type="button" class="btn btn-sm btn-danger my-4"
+                                                    data-toggle="modal" data-target="#delete{{data.id}}"><i
+                                                        class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- HTML5 inputs -->
+                        <div class="card">
+                            <div class="card-header bg-warning">
+                                <h3 class="mb-0 text-white">Prasarana komunikasi</h3>
+                            </div>
+                            <!-- Card header -->
+                            <div class="card-header">
+                                <button type="button" class="btn btn-primary my-4 btn-sm" data-toggle="modal"
+                                    data-target="#tambah2">Tambah
+                                    data</button>
+                            </div>
+                            <div class="table-responsive py-4">
+                                <table class="table table-flush">
+                                    <thead class="thead-success">
+                                        <tr>
+                                            <th scope="col">No</th>
+                                            <th scope="col">Nama prasarana</th>
+                                            <th scope="col">Jumlah</th>
+                                            <th scope="col">Deskripsi</th>
+                                            <th scope="col">#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for data in data2 %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{data.nama}}</td>
+                                            <td>{{data.jumlah}} unit</td>
+                                            <td>{{data.deskripsi}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm btn-warning my-4"
+                                                    data-toggle="modal" data-target="#ubah{{data.id}}"><i
+                                                        class="fas fa-pen"></i></button>
+
+                                                <button type="button" class="btn btn-sm btn-danger my-4"
+                                                    data-toggle="modal" data-target="#delete{{data.id}}"><i
+                                                        class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                        <div class="card">
+                            <!-- Card header -->
+                            <!-- Card body -->
+                            <div class="card-header bg-success">
+                                <h3 class="mb-0 text-white">Prasarana air bersih</h3>
+                            </div>
+                            <!-- Card header -->
+                            <div class="card-header">
+                                <button type="button" class="btn btn-primary my-4 btn-sm" data-toggle="modal"
+                                    data-target="#tambah3">Tambah
+                                    data</button>
+                            </div>
+                            <div class="table-responsive py-4">
+                                <table class="table table-flush">
+                                    <thead class="thead-success">
+                                        <tr>
+                                            <th scope="col">No</th>
+                                            <th scope="col">Nama prasarana</th>
+                                            <th scope="col">Jumlah</th>
+                                            <th scope="col">Deskripsi</th>
+                                            <th scope="col">#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {% for data in data3 %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{data.nama}}</td>
+                                            <td>{{data.jumlah}}</td>
+                                            <td>{{data.deskripsi}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm btn-warning my-4"
+                                                    data-toggle="modal" data-target="#ubah{{data.id}}"><i
+                                                        class="fas fa-pen"></i></button>
+
+                                                <button type="button" class="btn btn-sm btn-danger my-4"
+                                                    data-toggle="modal" data-target="#delete{{data.id}}"><i
+                                                        class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <!-- Card header -->
+                            <!-- Card body -->
+                            <div class="card-header bg-primary">
+                                <h3 class="mb-0 text-white">Prasaarana irigasi</h3>
+                            </div>
+                            <!-- Card header -->
+                            <div class="card-header">
+                                <button type="button" class="btn btn-primary my-4 btn-sm" data-toggle="modal"
+                                    data-target="#tambah4">Tambah
+                                    data</button>
+                            </div>
+                            <div class="table-responsive py-4">
+                                <table class="table table-flush">
+                                    <thead class="thead-success">
+                                        <tr>
+                                            <th scope="col">No</th>
+                                            <th scope="col">Nama prasarana</th>
+                                            <th scope="col">Jumlah/Luas</th>
+                                            <th scope="col">Deskripsi</th>
+                                            <th scope="col">#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {% for data in data4 %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{data.nama}}</td>
+                                            <td>{{data.jumlah}} M</td>
+                                            <td>{{data.deskripsi}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm btn-warning my-4"
+                                                    data-toggle="modal" data-target="#ubah{{data.id}}"><i
+                                                        class="fas fa-pen"></i></button>
+
+                                                <button type="button" class="btn btn-sm btn-danger my-4"
+                                                    data-toggle="modal" data-target="#delete{{data.id}}"><i
+                                                        class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card-wrapper">
+                        <!-- Sizes -->
+                        <div class="card">
+                            <!-- Card header -->
+                            <div class="card-header bg-danger">
+                                <h3 class="mb-0 text-white">Prasarana peribadatan</h3>
+                            </div>
+                            <div class="card-header">
+                                <button type="button" class="btn btn-primary my-4 btn-sm" data-toggle="modal"
+                                    data-target="#tambah5">Tambah
+                                    data</button>
+                            </div>
+                            <div class="table-responsive py-4">
+                                <table class="table table-flush">
+                                    <thead class="thead-success">
+                                        <tr>
+                                            <th scope="col">No</th>
+                                            <th scope="col">Nama prasarana</th>
+                                            <th scope="col">Jumlah</th>
+                                            <th scope="col">Deskripsi</th>
+                                            <th scope="col">#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {% for data in data5 %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{data.nama}}</td>
+                                            <td>{{data.jumlah}} unit</td>
+                                            <td>{{data.deskripsi}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm btn-warning my-4"
+                                                    data-toggle="modal" data-target="#ubah{{data.id}}"><i
+                                                        class="fas fa-pen"></i></button>
+
+                                                <button type="button" class="btn btn-sm btn-danger my-4"
+                                                    data-toggle="modal" data-target="#delete{{data.id}}"><i
+                                                        class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- Textareas -->
+                        <div class="card">
+                            <div class="card-header bg-info">
+                                <h3 class="mb-0 text-white">Prasarana pemerintahan</h3>
+                            </div>
+                            <div class="card-header">
+                                <button type="button" class="btn btn-primary my-4 btn-sm" data-toggle="modal"
+                                    data-target="#tambah6">Tambah
+                                    data</button>
+                            </div>
+                            <div class="table-responsive py-4">
+                                <table class="table table-flush">
+                                    <thead class="thead-success">
+                                        <tr>
+                                            <th scope="col">No</th>
+                                            <th scope="col">Nama prasarana</th>
+                                            <th scope="col">Jumlah</th>
+                                            <th scope="col">Deskripsi</th>
+                                            <th scope="col">#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for data in data6 %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{data.nama}}</td>
+                                            <td>{{data.jumlah}} unit</td>
+                                            <td>{{data.deskripsi}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm btn-warning my-4"
+                                                    data-toggle="modal" data-target="#ubah{{data.id}}"><i
+                                                        class="fas fa-pen"></i></button>
+
+                                                <button type="button" class="btn btn-sm btn-danger my-4"
+                                                    data-toggle="modal" data-target="#delete{{data.id}}"><i
+                                                        class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- Selects -->
+                        <div class="card">
+                            <!-- Card header -->
+                            <div class="card-header bg-default">
+                                <h3 class="mb-0 text-white">Prasarana kesehatan</h3>
+                            </div>
+                            <div class="card-header">
+                                <button type="button" class="btn btn-primary my-4 btn-sm" data-toggle="modal"
+                                    data-target="#tambah7">Tambah
+                                    data</button>
+                            </div>
+                            <div class="table-responsive py-4">
+                                <table class="table table-flush">
+                                    <thead class="thead-success">
+                                        <tr>
+                                            <th scope="col">No</th>
+                                            <th scope="col">Nama prasarana</th>
+                                            <th scope="col">Jumlah</th>
+                                            <th scope="col">Deskripsi</th>
+                                            <th scope="col">#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {% for data in data7 %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{data.nama}}</td>
+                                            <td>{{data.jumlah}} unit</td>
+                                            <td>{{data.deskripsi}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm btn-warning my-4"
+                                                    data-toggle="modal" data-target="#ubah{{data.id}}"><i
+                                                        class="fas fa-pen"></i></button>
+
+                                                <button type="button" class="btn btn-sm btn-danger my-4"
+                                                    data-toggle="modal" data-target="#delete{{data.id}}"><i
+                                                        class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <!-- Card header -->
+                            <!-- Card body -->
+                            <div class="card-header bg-danger">
+                                <h3 class="mb-0 text-white">Prasarana penerangan</h3>
+                            </div>
+                            <!-- Card header -->
+                            <div class="card-header">
+                                <button type="button" class="btn btn-primary my-4 btn-sm" data-toggle="modal"
+                                    data-target="#tambah8">Tambah
+                                    data</button>
+                            </div>
+                            <div class="table-responsive py-4">
+                                <table class="table table-flush">
+                                    <thead class="thead-success">
+                                        <tr>
+                                            <th scope="col">No</th>
+                                            <th scope="col">Nama lembaga</th>
+                                            <th scope="col">Jumlah lembaga</th>
+                                            <th scope="col">Deskripsi</th>
+                                            <th scope="col">#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {% for data in data8 %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{data.nama}}</td>
+                                            <td>{{data.jumlah}} unit</td>
+                                            <td>{{data.deskripsi}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm btn-warning my-4"
+                                                    data-toggle="modal" data-target="#ubah{{data.id}}"><i
+                                                        class="fas fa-pen"></i></button>
+
+                                                <button type="button" class="btn btn-sm btn-danger my-4"
+                                                    data-toggle="modal" data-target="#delete{{data.id}}"><i
+                                                        class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- File browser -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- modal pertanian desa -->
+
+            <div class="modal fade" id="tambah1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true"></span></button>
+                            <h4 class="modal-title" id="myModalLabel">Prasarana transportasi darat</h4>
+                        </div>
+                        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-7 control-label">nama prasarana</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="nama" class="form-control" id="inputEmail3"
+                                            placeholder="nama prasarana" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-7 control-label">Panjang/luas</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="jumlah" class="form-control" id="inputEmail3"
+                                            placeholder="Panjang/luas (Km)" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword3" class="col-sm-4 control-label">Deskripsi</label>
+                                    <div class="col-sm-10">
+                                        <textarea name="deskripsi" class="form-control" id="" cols="5"
+                                            rows="3"> </textarea>
+                                    </div>
+                                </div>
+                                <input type="text" name="jenis" value="1" hidden>
+                            </div>
+                            <div class=" modal-footer">
+                                <button type="button" class="btn btn-default btn-flat"
+                                    data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary btn-flat" id="simpan">Tambah</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- modal potensi perkebunan -->
+
+            <div class="modal fade" id="tambah2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true"></span></button>
+                            <h4 class="modal-title" id="myModalLabel">Prasarana komunikasi</h4>
+                        </div>
+                        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-7 control-label">nama prasarana</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="nama" class="form-control" id="inputEmail3"
+                                            placeholder="nama prasarana" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-7 control-label">jumlah </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="jumlah" class="form-control" id="inputEmail3"
+                                            placeholder="Jumlah (unit)" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword3" class="col-sm-4 control-label">Deskripsi</label>
+                                    <div class="col-sm-10">
+                                        <textarea name="deskripsi" class="form-control" id="" cols="5"
+                                            rows="3"> </textarea>
+                                    </div>
+                                </div>
+                                <input type="text" name="jenis" value="2" hidden>
+                            </div>
+                            <div class=" modal-footer">
+                                <button type="button" class="btn btn-default btn-flat"
+                                    data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary btn-flat" id="simpan">Tambah</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Potensi peternakan desa -->
+            <div class="modal fade" id="tambah3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true"></span></button>
+                            <h4 class="modal-title" id="myModalLabel">Prasarana air bersih</h4>
+                        </div>
+                        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-7 control-label">Nama prasarana</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="nama" class="form-control" id="inputEmail3"
+                                            placeholder="Nama prasarana" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-7 control-label">Jumlah</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="jumlah" class="form-control" id="inputEmail3"
+                                            placeholder="Jumlah (unit)" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword3" class="col-sm-4 control-label">Deskripsi</label>
+                                    <div class="col-sm-10">
+                                        <textarea name="deskripsi" class="form-control" id="" cols="5"
+                                            rows="3"> </textarea>
+                                    </div>
+                                </div>
+                                <input type="text" name="jenis" value="3" hidden>
+                            </div>
+                            <div class=" modal-footer">
+                                <button type="button" class="btn btn-default btn-flat"
+                                    data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary btn-flat" id="simpan">Tambah</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Potensi perikanan -->
+
+            <div class="modal fade" id="tambah4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true"></span></button>
+                            <h4 class="modal-title" id="myModalLabel">Prasarana irigasi</h4>
+                        </div>
+                        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-7 control-label">Nama prasarana</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="nama" class="form-control" id="inputEmail3"
+                                            placeholder="Nama prasarana" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-7 control-label">Jumlah</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="jumlah" class="form-control" id="inputEmail3"
+                                            placeholder="Luas/jumlah (M)" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword3" class="col-sm-4 control-label">Deskripsi</label>
+                                    <div class="col-sm-10">
+                                        <textarea name="deskripsi" class="form-control" id="" cols="5"
+                                            rows="3"> </textarea>
+                                    </div>
+                                </div>
+                                <input type="text" name="jenis" value="4" hidden>
+                            </div>
+                            <div class=" modal-footer">
+                                <button type="button" class="btn btn-default btn-flat"
+                                    data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary btn-flat" id="simpan">Tambah</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pemberdayaan masyarakat  -->
+
+            <div class="modal fade" id="tambah5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true"></span></button>
+                            <h4 class="modal-title" id="myModalLabel">Prasarana Peribadatan</h4>
+                        </div>
+                        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-7 control-label">Nama peribadatan</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="nama" class="form-control" id="inputEmail3"
+                                            placeholder="Nama peribadatan" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-7 control-label">Jumlahr</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="jumlah" class="form-control" id="inputEmail3"
+                                            placeholder="jumlah (unit)" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword3" class="col-sm-4 control-label">Deskripsi</label>
+                                    <div class="col-sm-10">
+                                        <textarea name="deskripsi" class="form-control" id="" cols="5"
+                                            rows="3"> </textarea>
+                                    </div>
+                                </div>
+                                <input type="text" name="jenis" value="5" hidden>
+                            </div>
+                            <div class=" modal-footer">
+                                <button type="button" class="btn btn-default btn-flat"
+                                    data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary btn-flat" id="simpan">Tambah</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Penanggulanagn bencana, darurat dan mendesak -->
+            <div class="modal fade" id="tambah6" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true"></span></button>
+                            <h4 class="modal-title" id="myModalLabel">Prasarana pemerintahan</h4>
+                        </div>
+                        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-7 control-label">Nama prasarana</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="nama" class="form-control" id="inputEmail3"
+                                            placeholder="Nama prasarana" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-7 control-label">Jumlah </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="jumlah" class="form-control" id="inputEmail3"
+                                            placeholder="Jumlah (unit)" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword3" class="col-sm-4 control-label">Deskripsi</label>
+                                    <div class="col-sm-10">
+                                        <textarea name="deskripsi" class="form-control" id="" cols="5"
+                                            rows="3"> </textarea>
+                                    </div>
+                                </div>
+                                <input type="text" name="jenis" value="6" hidden>
+                            </div>
+                            <div class=" modal-footer">
+                                <button type="button" class="btn btn-default btn-flat"
+                                    data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary btn-flat" id="simpan">Tambah</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="tambah7" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true"></span></button>
+                            <h4 class="modal-title" id="myModalLabel">Prasarana kesehatan</h4>
+                        </div>
+                        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-7 control-label">Nama prasarana</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="nama" class="form-control" id="inputEmail3"
+                                            placeholder="Nama prasarana" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-7 control-label">Jumlah </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="jumlah" class="form-control" id="inputEmail3"
+                                            placeholder="Jumlah (unit)" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword3" class="col-sm-4 control-label">Deskripsi</label>
+                                    <div class="col-sm-10">
+                                        <textarea name="deskripsi" class="form-control" id="" cols="5"
+                                            rows="3"> </textarea>
+                                    </div>
+                                </div>
+                                <input type="text" name="jenis" value="7" hidden>
+                            </div>
+                            <div class=" modal-footer">
+                                <button type="button" class="btn btn-default btn-flat"
+                                    data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary btn-flat" id="simpan">Tambah</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="tambah8" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true"></span></button>
+                            <h4 class="modal-title" id="myModalLabel">Prasarana penerangan</h4>
+                        </div>
+                        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-7 control-label">Nama prasarana</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="nama" class="form-control" id="inputEmail3"
+                                            placeholder="Jenis hewan" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-7 control-label">Jumlah </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="jumlah" class="form-control" id="inputEmail3"
+                                            placeholder="Jumlah (rumah)" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword3" class="col-sm-4 control-label">Deskripsi</label>
+                                    <div class="col-sm-10">
+                                        <textarea name="deskripsi" class="form-control" id="" cols="5"
+                                            rows="3"> </textarea>
+                                    </div>
+                                </div>
+                                <input type="text" name="jenis" value="8" hidden>
+                            </div>
+                            <div class=" modal-footer">
+                                <button type="button" class="btn btn-default btn-flat"
+                                    data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary btn-flat" id="simpan">Tambah</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            {% for data in data  %}
+            <div class="modal fade" id="ubah{{data.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true"></span></button>
+                            <h4 class="modal-title" id="myModalLabel">Ubah data prasarana</h4>
+                        </div>
+                        <form class="form-horizontal" method="POST" action="{% url 'ubah_pras' data.id %}"
+                            enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-7 control-label">Nama prasarana
+                                        daya</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" name="nama" class="form-control" id="inputEmail3"
+                                            value="{{data.nama}}" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-7 control-label">Jumlah unit/Km
+                                        daya</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" name="jumlah" class="form-control" id="inputEmail3"
+                                            value="{{data.jumlah}}" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword3" class="col-sm-4 control-label">Deskripsi</label>
+                                    <div class="col-sm-10">
+                                        <textarea name="deskripsi" class="form-control" id="" cols="5"
+                                            rows="3">{{data.deskripsi}}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" modal-footer">
+                                <button type="button" class="btn btn-default btn-flat"
+                                    data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary btn-flat" id="simpan">Ubah</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="delete{{data.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Hapus data</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="{% url 'hapus_pras' data.id %}" method="POST">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                Hapus data?
+                            </div>
+                            <input type="text" name="bagian" value="1" hidden>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                <button type="submit" class="btn btn-danger">Hapus</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- Footer -->
+            {% include 'admin/base/footer.html' %}
